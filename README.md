@@ -7,6 +7,16 @@
 ## To Run
 - Run either `go run main.go` or `go run *.go` from the root project directory
 
+## Endpoints
+- GET /customers
+- GET /customers/{id}
+- POST /customers
+- PUT /customers/{id}
+- DELETE /customers/{id}
+
+### Example Request
+`curl -X GET http://localhost:8000/customers`
+
 ## Future Iterations
 - In the future, there are a couple of things that would be cool to do.
   - Deploy this somewhere, rather than just running on local machine.

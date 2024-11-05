@@ -19,12 +19,12 @@ type Customer struct {
 }
 
 var customers = []Customer{
-	{1, "Joe Stafford", "GOAT", "jstafford3344@gmail.com", "215-219-7841", true},
-	{2, "Allison Leyh", "WOAT", "allisonleyh12@gmail.com", "856-701-6434", true},
+	{1, "Shawn Bradley", "GOAT", "shawnbradley@gmail.com", "215-610-7812", true},
+	{2, "Tyrone Hill", "WOAT", "thill@gmail.com", "856-523-1357", true},
 	{3, "John Thompson", "Coach", "jthompson@georgetown.edu", "856-229-7171", false},
 	{4, "Allen Iverson", "Basketball Hooper", "ai@76ers.com", "215-281-7817", false},
 	{5, "Dikembe Mutombo", "Shot Blocker", "dmutombo@76ers.com", "215-271-8289", false},
-	{6, "Bennett Stafford", "Baby", "bennett@babies.com", "215-729-7287", true},
+	{6, "Glenn Robinson", "PF", "bennett@76ers.com", "819-010-7287", true},
 }
 
 func getCustomers(w http.ResponseWriter, r *http.Request) {
@@ -46,14 +46,16 @@ func getCustomerById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if id <= 0 || id > len(customers) {
-		http.Error(w, "Customer not found", http.StatusNotFound)
-		log.Println("Customer not found!")
-		return
+	for _, customer := range customers {
+		if customer.Id == id {
+			json.NewEncoder(w).Encode(customer)
+			log.Println("Received GET customers request for id:", id)
+			return
+		}
 	}
 
-	json.NewEncoder(w).Encode(customers[id-1])
-	log.Println("Received GET customers request for id:", id)
+	http.Error(w, "Customer not found", http.StatusNotFound)
+	log.Println("Customer not found!")
 }
 
 func addCustomer(w http.ResponseWriter, r *http.Request) {
